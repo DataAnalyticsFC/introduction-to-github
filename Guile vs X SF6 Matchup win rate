@@ -1,0 +1,31 @@
+SELECT 
+    ROUND(100.0 * SUM(CASE WHEN guile_result = 'W' THEN 1 ELSE 0 END) / COUNT(*), 2) AS guile_win_percentage
+FROM (
+    SELECT 
+        CASE
+            WHEN p1_char = 'Guile' AND p1_result = 'False' THEN 'L'
+            WHEN p1_char = 'Guile' AND p1_result = 'True' THEN 'W'
+            WHEN p2_char = 'Guile' AND p2_result = 'False' THEN 'L'
+            WHEN p2_char = 'Guile' AND p2_result = 'True' THEN 'W'
+            ELSE NULL
+        END AS guile_result
+    FROM sf6_matches
+    WHERE 
+        ((p1_char = 'Guile' AND p2_char = 'Edmond Honda') OR 
+         (p1_char = 'Edmond Honda' AND p2_char = 'Guile'))
+        AND (p1_mr > 1800 OR p2_mr > 1800)
+) AS guile_data;
+
+--Win rate for Guile vs Edmonda Honda with at least one of the players MR greater than 1800
+--Code used for each character in SF6 (i.e. changed 'Edmond Honda' to 'Aki')
+
+SELECT 
+COUNT (*) AS Guile_vs_EHonda
+    FROM sf6_matches
+    WHERE 
+        ((p1_char = 'Guile' AND p2_char = 'Edmond Honda') OR 
+         (p1_char = 'Edmond Honda' AND p2_char = 'Guile'))
+        AND (p1_mr > 1800 OR p2_mr > 1800) 
+
+--Total matches Guile vs Edmond Honda with at least one of the players MR greater than 1800
+--Code used for each character in SF6 (i.e. changed 'Edmond Honda' to 'Aki')
